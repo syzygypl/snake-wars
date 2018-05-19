@@ -20,10 +20,10 @@ function main {
     mkdir "$SNAKES_DIR";
     cd "$SNAKES_DIR";
 
-    git clone git@github.com:FrostF0X/snake-gordon.git snake1
-    git clone git@github.com:FrostF0X/snake-gordon.git snake2
-    git clone git@github.com:FrostF0X/snake-gordon.git snake3
-
+    git clone https://github.com/andrzejdus/batman-snake batman1 && cd batman1 && yarn install &
+    git clone https://github.com/andrzejdus/batman-snake batman2 && cd batman2 && yarn install &
+    git clone https://github.com/andrzejdus/batman-snake batman3 && cd batman3 && yarn install &
+    git clone https://github.com/andrzejdus/batman-snake batman4 && cd batman4 && yarn install &
 }
 
 main "$@"
