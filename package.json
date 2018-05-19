@@ -13,8 +13,8 @@
     "test": "npm run frontend-test",
     "frontend-test": "cd frontend && npm test",
     "postinstall": "npm run frontend-install && npm run backend-install",
-    "frontend-install": "cd frontend && npm install",
-    "backend-install": "cd backend && npm install",
+    "frontend-install": "cd frontend && yarn",
+    "backend-install": "cd backend && yarn",
     "seed": "./seed.sh"
   },
   "repository": {

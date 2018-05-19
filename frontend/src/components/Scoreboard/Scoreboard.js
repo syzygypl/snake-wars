@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import './Scoreboard.css';
 
 export default class Scoreboard extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div className="scoreboard">
