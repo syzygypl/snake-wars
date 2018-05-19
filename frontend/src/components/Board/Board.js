@@ -29,7 +29,7 @@ class Board extends Component {
       this.updateCanvas();
   }
 
-  componentWillReceiveProps(props) {
+  componentWillReceiveProps() {
     this.updateCanvas();
   }
   
@@ -93,7 +93,7 @@ class Board extends Component {
     
     for(let i = 0; i<this.props.boardData.length; i++) {
       for(let j = 0; j<this.props.boardData[i].length; j++) {
-        this.drawTile(ctx, [j*this.tileSize, i*this.tileSize], this.props.boardData[i][j]);
+        this.drawTile(ctx, [i*this.tileSize, j*this.tileSize], this.props.boardData[i][j]);
       }
     }
     
