@@ -7,7 +7,7 @@ import registerServiceWorker from './registerServiceWorker';
 import { SocketProvider } from 'socket.io-react';
 import io from 'socket.io-client';
 
-const socket = io.connect('/');
+const socket = io.connect(process.env.REACT_APP_SOCKET_IO_HOST || '/');
 
 ReactDOM.render(
     <SocketProvider socket={socket}>
