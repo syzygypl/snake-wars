@@ -4,17 +4,20 @@
   "description": "Snake wars boot gaming playing platform",
   "main": "index.js",
   "scripts": {
-    "start": "npm run backend-start & npm run frontend-start",
-    "frontend-start": "cd frontend && npm start",
-    "backend-start": "cd backend && npm start",
-    "watch": "npm run backend-watch & npm run frontend-watch",
-    "frontend-watch": "cd frontend && npm watch",
-    "backend-watch": "cd backend && npm watch",
-    "test": "npm run frontend-test",
-    "frontend-test": "cd frontend && npm test",
-    "postinstall": "npm run frontend-install && npm run backend-install",
-    "frontend-install": "cd frontend && yarn",
-    "backend-install": "cd backend && yarn",
+    "start": "yarn backend-start",
+    "frontend-start": "cd frontend && yarn start",
+    "backend-start": "cd backend && yarn start",
+    "watch": "yarn backend-watch & yarn frontend-watch",
+    "frontend-watch": "cd frontend && yarn watch",
+    "backend-watch": "cd backend && yarn watch",
+    "test": "yarn frontend-test",
+    "frontend-test": "cd frontend && yarn test",
+    "build": "yarn frontend-build && yarn backend-build",
+    "frontend-build": "cd frontend && yarn build",
+    "backend-build": "cd backend && yarn build",
+    "frontend-install": "cd frontend && yarn install",
+    "backend-install": "cd backend && yarn install",
+    "postinstall": "yarn frontend-install && yarn backend-install && yarn build",
     "seed": "./seed.sh"
   },
   "repository": {
@@ -24,7 +27,10 @@
   "author": "frost_fox",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/FrostF0X/snake_wars/issues"
+    "url": "https://github.com/syzygypl/snake-wars/issues"
   },
-  "homepage": "https://github.com/FrostF0X/snake_wars#readme"
+  "homepage": "https://github.com/syzygypl/snake-wars#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
 }
