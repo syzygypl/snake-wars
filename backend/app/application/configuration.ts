@@ -22,5 +22,3 @@ export const TIMEOUT: number = 200;
 
 export const SIZE: Dimension = new Dimension(59, 59);
 
-export const SNAKES_DIR: string = "snakes";
-export const INDEX_FILE: string = "index.js";

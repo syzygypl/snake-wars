@@ -1,6 +1,26 @@
 const Factory = require("./dist/application/every-fucking-thing-factory").default;
 const io = require("./dist/server/server").default;
 
-let factory = new Factory();
-let game = factory.createGame(io);
-game.startGame();
+const factory = new Factory();
+const lobby = factory.createPlayersLobby();
+
+io.on("connection", socket => {
+  socket.on("hello", function (name) {
+    if (lobby.isFull) {
+      console.log("client emited hello on a full lobby");
+      return socket.emit("full");
+    }
+
+    console.log("new player registered: " + name);
+    lobby.add(name, socket);
+    socket.emit("lobby");
+
+    if (lobby.isFull) {
+      console.log("game starts");
+      const game = factory.createGame(io, lobby.resolve());
+      game.startGame();
+
+    }
+  });
+});
+

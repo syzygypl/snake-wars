@@ -30,18 +30,23 @@ export default class BoarToArrayMapper {
 
     private static fillWithAliveSnake(array: any[][], snake: Snake): void {
         array[snake.getHead().getX()][snake.getHead().getX()] = {
-            [BoardCell.Player]: snake.getIndex(), [BoardCell.Head]: snake.getDirection(),
+            [BoardCell.Player]: snake.getIndex(),
+            [BoardCell.Head]: snake.getDirection(),
         };
 
         snake.getBody().forEach((point: Point) => {
-            array[point.getX()][point.getY()] = {[BoardCell.Player]: snake.getIndex()};
+            array[point.getX()][point.getY()] = {
+                [BoardCell.Player]: snake.getIndex()
+            };
         });
     }
 
     private static fillWithDeadSnake(array: any[][], snake: Snake): void {
         const bounds: Point[] = snake.getBounds();
         bounds.forEach((point: Point) => {
-            array[point.getX()][point.getY()] = {[BoardCell.Dead]: true};
+            array[point.getX()][point.getY()] = {
+                [BoardCell.Dead]: true
+            };
         });
     }
 

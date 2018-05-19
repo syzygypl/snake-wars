@@ -17,11 +17,15 @@ export default class Game {
                 private io: Server) {
     }
 
+
+
     public startGame(): void {
+        console.log("start game");
         this.nextMove();
     }
 
     public endGame(): void {
+        console.log("end game");
         if (this.alivePlayers.getLength() === 1) {
             console.log("We have a winner: " + this.alivePlayers.get(0).getName());
         } else if (this.alivePlayers.getLength() === 0) {
@@ -34,18 +38,27 @@ export default class Game {
     }
 
     public nextMove(): void {
+        console.log("next move");
         if (this.alivePlayers.getLength() < 2) {
             this.endGame();
             return;
         }
 
         this.movePlayer();
-        setTimeout(() => this.nextMove(), 150);
     }
 
     public movePlayer(): void {
         const player: Player = this.alivePlayers.next();
-        const move: string = player.move(this.board);
+        player.move(this.board, this.timeout)
+            .then(move => this.executeMove(move, player))
+            .catch(() => this.executeMove(undefined, player));
+    }
+
+    public kill(player: Player): void {
+        this.deadPlayers.push(this.alivePlayers.deletePlayerByName(player.getName()));
+    }
+
+    private executeMove(move, player: Player) {
         const snake: Snake = player.getSnake();
 
         if (move === Turn.Left) {
@@ -61,10 +74,7 @@ export default class Game {
         }
 
         this.io.emit("update", this.board.mapToArray());
-    }
-
-    public kill(player: Player): void {
-        this.deadPlayers.push(this.alivePlayers.deletePlayerByName(player.getName()));
+        this.nextMove();
     }
 
 }

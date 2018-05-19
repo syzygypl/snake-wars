@@ -2,23 +2,29 @@ import { DirectionUtils } from "../game/basic/direction-utils";
 import Point from "../game/basic/point";
 import Board from "../game/board/board";
 import Game from "../game/game";
-import { PlayerFactory } from "../game/player/player-factory";
+import PlayerFactory from "../game/player/player-factory";
 import PlayersCollection from "../game/player/players-collection";
-import { PlayersResolver } from "../game/player/players-resolver";
+import PlayersLobby from "../game/player/players-lobby";
 import Snake from "../game/snake/snake";
 import SnakeFactory from "../game/snake/snake-factory";
 import Server = SocketIO.Server;
 import InitialWallConfiguration from "../game/wall/initial-wall-configuration";
 import Wall from "../game/wall/wall";
-import AlgorithmLoader from "./algorithm-loader";
-import { INDEX_FILE, INITIAL_SNAKES_DATA, INITIAL_WALLS_DATA, SIZE, SNAKES_DIR, TIMEOUT } from "./configuration";
+import { INITIAL_SNAKES_DATA, INITIAL_WALLS_DATA, SIZE, TIMEOUT } from "./configuration";
 
 // used int index.js file
 // noinspection JSUnusedGlobalSymbols
 export default class EveryFuckingThingFactory {
 
-    public createGame(io: Server): Game {
-        const players: PlayersCollection = this.createPlayers();
+    public createPlayersLobby(): PlayersLobby {
+
+        const snakeFactory: SnakeFactory = new SnakeFactory();
+        const playerFactory: PlayerFactory = new PlayerFactory(snakeFactory);
+
+        return new PlayersLobby(playerFactory, INITIAL_SNAKES_DATA);
+    }
+
+    public createGame(io: Server, players: PlayersCollection): Game {
         const snakes: Snake[] = players.getSnakes();
 
         return new Game(this.createBoard(snakes), players, TIMEOUT, io);
@@ -46,12 +52,4 @@ export default class EveryFuckingThingFactory {
         return new Wall(bounds);
     }
 
-    private createPlayers(): PlayersCollection {
-        const snakeFactory: SnakeFactory = new SnakeFactory();
-        const playerFactory: PlayerFactory = new PlayerFactory(snakeFactory, SIZE, TIMEOUT);
-        const algorithmLoader: AlgorithmLoader = new AlgorithmLoader(SNAKES_DIR, INDEX_FILE);
-        const playersResolver: PlayersResolver =
-            new PlayersResolver(algorithmLoader, playerFactory, INITIAL_SNAKES_DATA);
-        return playersResolver.resolve();
-    }
 }

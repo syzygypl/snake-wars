@@ -1,20 +1,19 @@
+import Server = SocketIO.Server;
 import Board from "../board/board";
 import Snake from "../snake/snake";
-import PlayerAlgorithm from "./player-algorithm";
 
 export default class Player {
-    private algorithm: PlayerAlgorithm;
+    private nextMove: string = undefined;
 
-    constructor(private name: string, playerAlgorithm: PlayerAlgorithm, private snake: Snake) {
-        this.algorithm = playerAlgorithm;
+    constructor(private name: string, private socket: Server, private snake: Snake) {
+        this.socket.on("move", move => this.nextMove = move);
     }
 
-    public move(board: Board): string {
-        try {
-            return this.algorithm.getMove(board.mapToArray());
-        } catch (e) {
-            return undefined;
-        }
+    public move(board: Board, timeout: number): Promise<any> {
+        this.nextMove = undefined;
+        this.socket.emit('move', board.mapToArray());
+
+        return new Promise(resolve => setTimeout(() => resolve(this.nextMove), timeout));
     }
 
     public getName(): string {
