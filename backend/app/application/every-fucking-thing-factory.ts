@@ -21,7 +21,7 @@ export default class EveryFuckingThingFactory {
         const snakeFactory: SnakeFactory = new SnakeFactory();
         const playerFactory: PlayerFactory = new PlayerFactory(snakeFactory);
 
-        return new PlayersLobby(playerFactory, INITIAL_SNAKES_DATA);
+        return new PlayersLobby(playerFactory, INITIAL_SNAKES_DATA, SIZE, TIMEOUT);
     }
 
     public createGame(io: Server, players: PlayersCollection): Game {

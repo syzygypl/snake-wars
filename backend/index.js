@@ -12,8 +12,8 @@ io.on("connection", socket => {
     }
 
     console.log("new player registered: " + name);
-    lobby.add(name, socket);
-    socket.emit("lobby");
+
+    socket.emit("init", lobby.add(name, socket));
 
     if (lobby.isFull) {
       console.log("game starts");
