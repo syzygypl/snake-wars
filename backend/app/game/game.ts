@@ -38,7 +38,6 @@ export default class Game {
     }
 
     public nextMove(): void {
-        console.log("next move");
         if (this.alivePlayers.getLength() < 2) {
             this.endGame();
             return;
@@ -59,6 +58,7 @@ export default class Game {
     }
 
     private executeMove(move, player: Player) {
+        console.log(`player ${player.getName()} moves ${move}`);
         const snake: Snake = player.getSnake();
 
         if (move === Turn.Left) {
