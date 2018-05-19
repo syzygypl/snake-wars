@@ -3,13 +3,12 @@ import Point from "../basic/point";
 import Snake from "../snake/snake";
 import Wall from "../wall/wall";
 import BoarToArrayMapper from "./board-to-array-mapper";
-import { MoveResult } from "./move-result";
+import {MoveResult} from "./move-result";
 
 export default class Board {
     private aliveSnakes: Snake[];
     private deadSnakes: Snake[];
     private apple: Point;
-    private counter: number;
 
     constructor(private walls: Wall[], snakes: Snake[], private size: Dimension) {
         this.aliveSnakes = snakes;
@@ -22,12 +21,10 @@ export default class Board {
         const y: number = Math.floor(Math.random() * this.size.getHeight());
         const apple: Point = new Point(x, y);
 
-        if (!this.checkCollisionWithSnakes(apple, this.aliveSnakes) || this.counter > 50) {
+        if (!this.checkCollisionWithSnakes(apple, this.aliveSnakes)) {
             this.apple = apple;
             return;
         }
-
-        this.counter++;
 
         this.generateApple();
     }

@@ -41,7 +41,6 @@ export default class Game {
             return;
         }
         this.movePlayer();
-        setTimeout(() => this.nextMove(), 150);
     }
 
     public movePlayer(): void {

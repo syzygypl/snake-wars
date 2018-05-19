@@ -6,7 +6,7 @@ export default class Player {
     private nextMove: string = undefined;
 
     constructor(private name: string, private socket: Server, private snake: Snake) {
-        this.socket.on("move", move => this.nextMove = move);
+        this.socket.on("move", (move: string) => this.nextMove = move);
     }
 
     public move(board: Board, timeout: number): Promise<any> {
