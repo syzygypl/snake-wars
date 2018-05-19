@@ -22,9 +22,11 @@ export default class PlayersCollection {
         const player: Player = this.players.splice(index, 1).shift();
         this.reindexArray();
 
-        if (index >= this.currentIndex) {
+        console.log(this.currentIndex);
+        if (index <= this.currentIndex) {
             this.decreaseIndex();
         }
+        console.log(this.currentIndex);
 
         return player;
     }
