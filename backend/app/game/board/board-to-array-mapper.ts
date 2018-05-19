@@ -1,7 +1,7 @@
 import Point from "../basic/point";
 import Snake from "../snake/snake";
 import Board from "./board";
-import { BoardCell } from "./board-cell";
+import {BoardCell} from "./board-cell";
 
 export default class BoarToArrayMapper {
     public static mapToArray(board: Board): any[][] {
@@ -24,35 +24,32 @@ export default class BoarToArrayMapper {
 
     private static fillWithDeadSnakes(board: Board, array: any[][]): void {
         board.getDeadSnakes().forEach((snake: Snake) => {
-            this.fillWithDeadSnake(array, snake);
+            this.fillWithDeadSnake(board, array, snake);
         });
     }
 
     private static fillWithAliveSnake(array: any[][], snake: Snake): void {
-        array[snake.getHead().getX()][snake.getHead().getX()] = {
-            [BoardCell.Player]: snake.getIndex(),
-            [BoardCell.Head]: snake.getDirection(),
+        array[snake.getHead().getX()][snake.getHead().getY()] = {
+            [BoardCell.Player]: snake.getIndex(), [BoardCell.Head]: snake.getDirection(),
         };
-
         snake.getBody().forEach((point: Point) => {
-            array[point.getX()][point.getY()] = {
-                [BoardCell.Player]: snake.getIndex()
-            };
+            array[point.getX()][point.getY()] = {[BoardCell.Player]: snake.getIndex()};
         });
     }
 
-    private static fillWithDeadSnake(array: any[][], snake: Snake): void {
+    private static fillWithDeadSnake(board: Board, array: any[][], snake: Snake): void {
         const bounds: Point[] = snake.getBounds();
         bounds.forEach((point: Point) => {
-            array[point.getX()][point.getY()] = {
-                [BoardCell.Dead]: true
-            };
+            if (board.getSize().pointIsOutOfBounds(point)) {
+                return;
+            }
+            array[point.getX()][point.getY()] = {[BoardCell.Dead]: true};
         });
     }
 
     private static createArray(board: Board): any[][] {
         const array: any[] = (new Array(board.getSize().getHeight())).fill(undefined);
-        for (let i: number = 0; i < board.getSize().getWidth(); i++) {
+        for (let i: number = 0; i <= board.getSize().getWidth(); i++) {
             array[i] = (new Array(board.getSize().getWidth())).fill(undefined);
         }
         return array;

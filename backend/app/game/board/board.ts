@@ -9,6 +9,7 @@ export default class Board {
     private aliveSnakes: Snake[];
     private deadSnakes: Snake[];
     private apple: Point;
+    private counter: number;
 
     constructor(private walls: Wall[], snakes: Snake[], private size: Dimension) {
         this.aliveSnakes = snakes;
@@ -21,10 +22,12 @@ export default class Board {
         const y: number = Math.floor(Math.random() * this.size.getHeight());
         const apple: Point = new Point(x, y);
 
-        if (!this.checkCollisionWithSnakes(apple, this.aliveSnakes)) {
+        if (!this.checkCollisionWithSnakes(apple, this.aliveSnakes) || this.counter > 50) {
             this.apple = apple;
             return;
         }
+
+        this.counter++;
 
         this.generateApple();
     }
@@ -73,7 +76,7 @@ export default class Board {
             throw new Error("no such snake alive");
         }
 
-        this.deadSnakes.concat(this.aliveSnakes.splice(index, 1));
+        this.deadSnakes.push(this.aliveSnakes.splice(index, 1).pop());
     }
 
     private checkCollisionWithAnotherPlayers(snake: Snake): boolean {

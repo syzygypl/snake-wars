@@ -8,9 +8,9 @@ export default class PlayersCollection {
         this.decreaseIndex();
     }
 
-    public deletePlayerByName(playerName: string): Player {
-        const index: number = this.players.findIndex((player: Player) => {
-            if (player.getName() === playerName) {
+    public popPlayerByName(playerName: string): Player {
+        const index: number = this.players.findIndex((currentPlayer: Player) => {
+            if (currentPlayer.getName() === playerName) {
                 return true;
             }
         });
@@ -19,11 +19,14 @@ export default class PlayersCollection {
             throw new Error("No such player here");
         }
 
+        const player: Player = this.players.splice(index, 1).shift();
+        this.reindexArray();
+
         if (index >= this.currentIndex) {
             this.decreaseIndex();
         }
 
-        return this.players.splice(index, 1).shift();
+        return player;
     }
 
     public get(index: number): Player {
@@ -57,5 +60,14 @@ export default class PlayersCollection {
         if (this.currentIndex === -1) {
             this.currentIndex = this.players.length - 1;
         }
+    }
+
+    private reindexArray(): void {
+        let counter: number = 0;
+        this.players.forEach((player: Player, index: number, array: Player[]): void => {
+            array[counter] = player;
+            counter++;
+        });
+        console.log(this.players);
     }
 }

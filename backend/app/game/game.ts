@@ -1,7 +1,7 @@
 import Server = SocketIO.Server;
-import { Turn } from "./basic/turn";
+import {Turn} from "./basic/turn";
 import Board from "./board/board";
-import { MoveResult } from "./board/move-result";
+import {MoveResult} from "./board/move-result";
 import Player from "./player/player";
 import PlayerCollection from "./player/players-collection";
 import Snake from "./snake/snake";
@@ -16,8 +16,6 @@ export default class Game {
                 private timeout: number,
                 private io: Server) {
     }
-
-
 
     public startGame(): void {
         console.log("start game");
@@ -42,22 +40,22 @@ export default class Game {
             this.endGame();
             return;
         }
-
         this.movePlayer();
+        setTimeout(() => this.nextMove(), 150);
     }
 
     public movePlayer(): void {
         const player: Player = this.alivePlayers.next();
         player.move(this.board, this.timeout)
-            .then(move => this.executeMove(move, player))
+            .then((move: string) => this.executeMove(move, player))
             .catch(() => this.executeMove(undefined, player));
     }
 
     public kill(player: Player): void {
-        this.deadPlayers.push(this.alivePlayers.deletePlayerByName(player.getName()));
+        this.deadPlayers.push(this.alivePlayers.popPlayerByName(player.getName()));
     }
 
-    private executeMove(move, player: Player) {
+    private executeMove(move: string, player: Player): void {
         console.log(`player ${player.getName()} moves ${move}`);
         const snake: Snake = player.getSnake();
 

@@ -47,7 +47,7 @@ export default class EveryFuckingThingFactory {
 
         for (let i: number = 0; i < configuration.getLength(); i++) {
             lastPoint = DirectionUtils.createMovedPointInDirection(
-                lastPoint, DirectionUtils.getOpposite(configuration.getDirection())
+                lastPoint, configuration.getDirection()
             );
             bounds.push(lastPoint);
         }
