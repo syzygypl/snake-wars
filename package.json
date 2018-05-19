@@ -8,7 +8,7 @@
     "frontend-start": "cd frontend && yarn start",
     "backend-start": "cd backend && yarn start",
     "watch": "yarn backend-watch & yarn frontend-watch",
-    "frontend-watch": "cd frontend && yarn watch",
+    "frontend-watch": "cd frontend && yarn start",
     "backend-watch": "cd backend && yarn watch",
     "test": "yarn frontend-test",
     "frontend-test": "cd frontend && yarn test",
